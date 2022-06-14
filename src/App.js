@@ -3,7 +3,8 @@ import { useState } from "react";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 
-function App() {
+const App = () => {
+  const { showAddTask, setShowAddTask } = useState(false);
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -19,6 +20,12 @@ function App() {
     },
     { id: 3, text: "Shopping", day: "feb 6th at 4:40pm", reminder: false },
   ]);
+  //add tASK
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 10000) + 1;
+    const newTask = { id, ...task };
+    setTasks([...tasks, newTask]);
+  };
   //delete task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -33,8 +40,8 @@ function App() {
   };
   return (
     <div className="container">
-      <Header />
-      <AddTask />
+      <Header onAdd={() => setShowAddTask(!showAddTask)} />
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
@@ -42,7 +49,7 @@ function App() {
       )}
     </div>
   );
-}
+};
 // CSS in jsx
 // const headeingStyleing = {
 //   color:'red',
