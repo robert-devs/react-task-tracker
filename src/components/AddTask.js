@@ -18,8 +18,8 @@ const AddTask = ({ onAdd }) => {
       day,
       reminder,
     });
-    setDay("");
     setText("");
+    setDay("");
     SetReminder(false);
   };
 

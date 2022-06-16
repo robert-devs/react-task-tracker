@@ -4,7 +4,7 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 
 const App = () => {
-  const [showAddTask, setShowAddTask] = useState(false);
+  const [showAddTask, setShowAddTask] = useState("");
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -18,7 +18,7 @@ const App = () => {
       day: "feb 10th at 7:40pm",
       reminder: true,
     },
-    { id: 3, text: "Shopping", day: "feb 6th at 4:40pm", reminder: false },
+    { id: 3, text: "Shopping", day: "feb 6th at 4:40pm", reminder: true },
   ]);
 
   //add tASK
@@ -26,6 +26,7 @@ const App = () => {
     const id = Math.floor(Math.random() * 10000) + 1;
     const newTask = { id, ...task };
     setTasks([...tasks, newTask]);
+    setShowAddTask(false);
   };
 
   //delete task
@@ -43,16 +44,14 @@ const App = () => {
   };
   return (
     <div className="container">
-      <Header
-        onAdd={() => setShowAddTask(!showAddTask)}
-        showAdd={showAddTask}
-      />
+      <Header onAdd={addTask} showAdd={showAddTask} />
       {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
         "no tasks to show"
       )}
+      {/* {onAdd ? <AddTask /> : null} */}
     </div>
   );
 };
